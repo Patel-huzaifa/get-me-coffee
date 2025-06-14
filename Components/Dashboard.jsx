@@ -20,6 +20,12 @@ const Dashboard = () => {
   }, []);
 
   const handleSubmit = async (e) => {
+    if (form.username.includes(" ")) {
+      toast.error("empty space between characters of username is not allowed")
+      document.db.username.focus()
+      return
+    }
+    update()
     let a = await updateProfile(e, session.user.name);
     toast.success("Profile updated!!")
   }
@@ -51,7 +57,7 @@ const Dashboard = () => {
           Welcome to your Dashboard
         </h1>
 
-        <form className="max-w-2xl mx-auto" action={handleSubmit}>
+        <form className="max-w-2xl mx-auto" name="db" action={handleSubmit}>
           <div className="my-2">
             <label
               htmlFor="name"

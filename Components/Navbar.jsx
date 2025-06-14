@@ -2,10 +2,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [showdropdown, setshowdropdown] = useState(false);
   const { data: session, status } = useSession();
+  const router = useRouter()
 
   // for dropdown box, making a reference
   const dropdownRef = useRef(null);
@@ -113,7 +116,10 @@ const Navbar = () => {
                 <li
                   onClick={() => {
                     signOut();
+
                     setshowdropdown(false); // close dropdown after logout
+                    toast("Login to help your Creators!")
+                    router.push("/")
                   }}
                 >
                   <p className="block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
@@ -127,7 +133,12 @@ const Navbar = () => {
         {session && (
           // another logout button outside dropdown
           <button
-            onClick={() => signOut()}
+            onClick={() => {
+              signOut()
+              toast("Login to help your Creators!")
+              router.push("/")
+            }
+            }
             className="bg-gray-950 cursor-pointer text-gray-400 border border-gray-400 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group"
           >
             <span className="bg-gray-400 shadow-gray-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
@@ -144,7 +155,7 @@ const Navbar = () => {
           </Link>
         )}
       </div>
-    </nav>
+    </nav >
   );
 };
 

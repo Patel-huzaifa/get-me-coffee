@@ -1,7 +1,6 @@
 "use server";
 import connectDB from "@/db/connectDb";
 import Payment from "@/model/Payment";
-import { Cursor } from "mongoose";
 import Razorpay from "razorpay";
 import User from "@/model/User";
 
@@ -54,12 +53,19 @@ export const fetchpayments = async (username) => {
 export const updateProfile = async (data, oldusername) => {
   await connectDB();
   let ndata = Object.fromEntries(data);
+
   if (oldusername !== ndata.username) {
-    let u = await User.findOne({ username: ndata.username });
-    if (u) {
+    let existingUser = await User.findOne({ username: ndata.username });
+    if (existingUser) {
       return { error: "username already exists" };
     }
   }
 
   await User.updateOne({ email: ndata.email }, ndata);
+  await Payment.updateMany(
+    { to_user: oldusername },
+    { to_user: ndata.username }
+  );
+
+  return { success: true };
 };

@@ -8,6 +8,8 @@ import { fetchuser, fetchpayments, initiate } from "@/actions/useractions";
 import Loader from "./Loader";
 import { Bounce, toast } from "react-toastify";
 import { useSearchParams } from 'next/navigation'
+import { notFound } from "next/navigation";
+
 
 const PaymentPage = ({ username }) => {
   const [paymentform, setpaymentform] = useState({
@@ -99,6 +101,9 @@ const PaymentPage = ({ username }) => {
     var rzp1 = new Razorpay(options);
     rzp1.open();
   };
+
+
+
   if (status === "loading") {
     return <>
       <div className="w-full flex justify-center items-center mt-64  h-full">
@@ -107,6 +112,8 @@ const PaymentPage = ({ username }) => {
       </div>
     </>
   }
+
+
   return (
     <>
 
@@ -129,7 +136,8 @@ const PaymentPage = ({ username }) => {
       </div>
       <div className="info flex justify-center flex-col items-center my-14 gap-2">
         <div className="text-3xl font-bold">@{username}</div>
-        <div className="text-slate-400">12,269 members • 784 posts</div>
+        <div className="text-slate-400">Let help @{username} to get coffee!</div>
+        <div className="text-slate-400">{payments.length} Payments •  ₹{payments.reduce((a, b) => a + b.amount, 0)} raised!</div>
 
         <div className="payment mt-6 flex gap-3 w-[80%]">
           <div className="supporters w-1/2 bg-slate-900 rounded-2xl p-4 pt-2">
