@@ -7,7 +7,6 @@ import connectDB from "@/db/connectDb";
 export const POST = async (req) => {
   await connectDB();
   let body = await req.formData();
-  console.log("Body recieved", body);
   body = Object.fromEntries(body);
   //*check if razorpayorderid is preset or not in db
   let p = await Payment.findOne({ oid: body.razorpay_order_id });

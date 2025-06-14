@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -11,7 +12,6 @@ const Dashboard = () => {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(session);
     if (!session) {
       router.push("/login");
     } else {

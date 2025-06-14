@@ -16,8 +16,7 @@ const page = () => {
     <>
       <div className="py-10 container mx-auto">
         <h2 className="text-2xl  font-bold text-center">
-          Login/SignUp to get your fans to support you
-        </h2>
+          Login/SignUp to get started</h2>
         <div className="social-login-button">
           <div className="flex flex-col gap-2 min-h-screen items-center   p-10">
             <button className="flex items-center w-[550px] cursor-pointer bg-slate-50 text-black border border-gray-300 rounded-lg shadow-md max-w-xs px-6 py-2 text-sm font-medium  hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">

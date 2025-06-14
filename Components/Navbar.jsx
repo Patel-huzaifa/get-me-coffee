@@ -40,7 +40,7 @@ const Navbar = () => {
   }, [showdropdown]); // this useEffect will run again when dropdown state change
 
   return (
-    <nav className="bg-slate-900 flex justify-between px-4 h-18 items-center text-white">
+    <nav className="bg-slate-900 flex md:flex-row flex-col justify-between px-4 md:h-16 h-18 items-center text-white">
       <div className="">
         <Link
           className="logo font-bold flex justify-center items-center text-lg"

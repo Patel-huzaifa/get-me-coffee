@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import Dashboard from "@/Components/Dashboard";
 const page = () => {
@@ -10,3 +9,7 @@ const page = () => {
 };
 
 export default page;
+
+export const metadata = {
+  title: "Dashboard - Get Me a Chai"
+}

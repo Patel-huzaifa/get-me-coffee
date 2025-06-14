@@ -55,7 +55,6 @@ const PaymentPage = ({ username }) => {
 
   const handleChange = (e) => {
     setpaymentform({ ...paymentform, [e.target.name]: e.target.value });
-    console.log(paymentform);
   };
 
   const getData = async () => {
@@ -141,7 +140,7 @@ const PaymentPage = ({ username }) => {
 
         <div className="payment mt-6 flex gap-3 w-[80%]">
           <div className="supporters w-1/2 bg-slate-900 rounded-2xl p-4 pt-2">
-            <h2 className="text-lg font-bold">Top Supporters</h2>
+            <h2 className="text-lg font-bold">Top 10 Supporters</h2>
             <ul className="mx-8">
               {payments.length == 0 && <li className="my-1 gap-2 flex items-center mt-10 text-xl text-slate-300">
                 No payments yet

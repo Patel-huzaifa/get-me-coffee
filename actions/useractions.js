@@ -44,11 +44,12 @@ export const fetchpayments = async (username) => {
   await connectDB();
   let p = await Payment.find({ to_user: username, done: true })
     .sort({ amount: -1 })
-    .limit(8)
+    .limit(10)
     .lean();
 
   return p;
 };
+
 
 export const updateProfile = async (data, oldusername) => {
   await connectDB();
