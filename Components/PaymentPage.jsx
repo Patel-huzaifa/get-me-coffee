@@ -6,8 +6,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { fetchuser, fetchpayments, initiate } from "@/actions/useractions";
 import Loader from "./Loader";
-import { ToastContainer, Bounce, toast } from "react-toastify";
-import { useSearchParams } from "next/navigation";
+import { Bounce, toast } from "react-toastify";
+import { useSearchParams } from 'next/navigation'
 
 const PaymentPage = ({ username }) => {
   const [paymentform, setpaymentform] = useState({
@@ -17,28 +17,39 @@ const PaymentPage = ({ username }) => {
   });
   const [CurrentUser, setCurrentUser] = useState({});
   const [payments, setpayments] = useState([]);
+  const searchParams = useSearchParams()
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  const SearchParams = useSearchParams()
   useEffect(() => {
-    if (SearchParams.get("paymentDone") == "true") {
-      toast('🦄 Payment has been made!', {
+    if (searchParams.get("paymentdone") === "true") {
+      toast('The payment has been made!!', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
-        closeOnClick: false,
+        closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
         theme: "dark",
         transition: Bounce,
       });
+      toast('Thanks for your donation!!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+      router.push(`${username}`)
     }
     getData();
   }, []);
-  useEffect(() => {
-  }, [])
+
 
   const handleChange = (e) => {
     setpaymentform({ ...paymentform, [e.target.name]: e.target.value });
@@ -63,7 +74,7 @@ const PaymentPage = ({ username }) => {
     let a = await initiate(amount, username, paymentform);
     let orderId = a.id;
     var options = {
-      key: process.env.NEXT_PUBLIC_RAZORPAY_ID, // Enter the Key ID generated from the Dashboard
+      key: CurrentUser.razorpayid, // Enter the Key ID generated from the Dashboard
       amount: amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
       currency: "INR",
       name: "Get Me A Chai", //your business name
@@ -98,19 +109,7 @@ const PaymentPage = ({ username }) => {
   }
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        transition={Bounce}
-      />
+
 
       <Script src="https://checkout.razorpay.com/v1/checkout.js"></Script>
       <div className="cover w-full  relative">

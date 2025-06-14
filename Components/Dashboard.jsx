@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Loader from "./Loader";
+import { toast, Bounce } from "react-toastify";
 import { fetchuser, updateProfile } from "@/actions/useractions";
 
 const Dashboard = () => {
@@ -19,10 +20,8 @@ const Dashboard = () => {
   }, []);
 
   const handleSubmit = async (e) => {
-    update();
     let a = await updateProfile(e, session.user.name);
-    alert("Profile updated")
-
+    toast.success("Profile updated!!")
   }
 
   //* Getting the data from the database

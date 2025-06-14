@@ -8,9 +8,11 @@ import User from "@/model/User";
 export const initiate = async (amount, to_username, paymentform) => {
   await connectDB();
 
+  let us = await User.findOne({ username: to_username });
+
   var instance = new Razorpay({
-    key_id: process.env.NEXT_PUBLIC_RAZORPAY_ID,
-    key_secret: process.env.RAZORPAY_SECRET,
+    key_id: us.razorpayid,
+    key_secret: us.razorpaysecret,
   });
 
   let options = {
