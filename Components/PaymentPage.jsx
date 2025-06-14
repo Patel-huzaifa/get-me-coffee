@@ -81,15 +81,14 @@ const PaymentPage = ({ username }) => {
           src={CurrentUser.coverpic}
           alt="coverpic"
         />
-        <div className="absolute bottom-[-13%] right-[47.5%] border-2 border-gray-300 rounded-full overflow-hidden">
+        <div className="absolute bottom-[-14%] right-[47.5%] border-2 border-gray-300 rounded-full overflow-hidden w-[100px] h-[100px]">
           <img
-            width={80}
-            height={80}
-            className=""
             src={CurrentUser.profilepic}
             alt="profilepic"
+            className="w-full h-full object-cover"
           />
         </div>
+
       </div>
       <div className="info flex justify-center flex-col items-center my-14 gap-2">
         <div className="text-3xl font-bold">@{username}</div>
@@ -100,7 +99,7 @@ const PaymentPage = ({ username }) => {
             <h2 className="text-lg font-bold">Top Supporters</h2>
             <ul className="mx-8">
               {payments.length == 0 && <li className="my-1 gap-2 flex items-center mt-10 text-xl text-slate-300">
-                There is no supporter of this user yet
+                No payments yet
 
               </li>}
               {payments.map((p, i) => {
