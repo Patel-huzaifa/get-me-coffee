@@ -6,23 +6,42 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { fetchuser, fetchpayments, initiate } from "@/actions/useractions";
 import Loader from "./Loader";
+import { ToastContainer, Bounce, toast } from "react-toastify";
+import { useSearchParams } from "next/navigation";
 
 const PaymentPage = ({ username }) => {
-  const [paymentform, setPaymentform] = useState({
+  const [paymentform, setpaymentform] = useState({
     name: "",
     message: "",
-    amount: "",
+    amount: 0,
   });
   const [CurrentUser, setCurrentUser] = useState({});
   const [payments, setpayments] = useState([]);
   const { data: session, status } = useSession();
   const router = useRouter();
+
+  const SearchParams = useSearchParams()
   useEffect(() => {
+    if (SearchParams.get("paymentDone") == "true") {
+      toast('🦄 Payment has been made!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+    }
     getData();
   }, []);
+  useEffect(() => {
+  }, [])
 
   const handleChange = (e) => {
-    setPaymentform({ ...paymentform, [e.target.name]: e.target.value });
+    setpaymentform({ ...paymentform, [e.target.name]: e.target.value });
     console.log(paymentform);
   };
 
@@ -35,6 +54,11 @@ const PaymentPage = ({ username }) => {
 
   //*Function that initiate paymenr
   const pay = async (amount) => {
+    if (paymentform.name < 2 || paymentform.message < 3 || (paymentform.name < 2 && paymentform.message < 3)) {
+      toast.error("Invalid name or message")
+      return
+    }
+
     // Get the order Id
     let a = await initiate(amount, username, paymentform);
     let orderId = a.id;
@@ -46,7 +70,7 @@ const PaymentPage = ({ username }) => {
       description: "Test Transaction",
       image: "https://example.com/your_logo",
       order_id: orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-      callback_url: `${process.env.NEXT_PUBLIC_lOCAL_URL}/api/razorpay`,
+      callback_url: `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/razorpay`,
       prefill: {
         //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
         name: "Gaurav Kumar", //your customer's name
@@ -74,6 +98,20 @@ const PaymentPage = ({ username }) => {
   }
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Bounce}
+      />
+
       <Script src="https://checkout.razorpay.com/v1/checkout.js"></Script>
       <div className="cover w-full  relative">
         <img
@@ -110,7 +148,7 @@ const PaymentPage = ({ username }) => {
                       src="/avatar.gif"
                       alt="useravater"
                     />
-                    {p.name} <span className="font-bold">{p.amount}</span>
+                    {p.name} <span className="font-bold">₹{p.amount}</span>
                     with message "{p.message}"
                   </li>
                 );
@@ -162,7 +200,9 @@ const PaymentPage = ({ username }) => {
             <div className="flex gap-2 mt-4">
               <button
                 onClick={() => {
+                  setpaymentform({ amount: 10 })
                   pay(1000);
+
                 }}
                 className="bg-slate-800 cursor-pointer p-3 rounded-lg"
               >
@@ -170,6 +210,7 @@ const PaymentPage = ({ username }) => {
               </button>
               <button
                 onClick={() => {
+                  setpaymentform({ amount: 20 })
                   pay(2000);
                 }}
                 className="bg-slate-800 p-3 cursor-pointer rounded-lg"
@@ -178,6 +219,7 @@ const PaymentPage = ({ username }) => {
               </button>
               <button
                 onClick={() => {
+                  setpaymentform({ amount: 30 })
                   pay(3000);
                 }}
                 className="bg-slate-800 p-3 cursor-pointer rounded-lg"
