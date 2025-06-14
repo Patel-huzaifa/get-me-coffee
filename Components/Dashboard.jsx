@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Loader from "./Loader";
-import {  fetchuser, updateProfile } from "@/actions/useractions";
+import { fetchuser, updateProfile } from "@/actions/useractions";
 
 const Dashboard = () => {
   const { data: session, status, update } = useSession();
@@ -26,7 +26,10 @@ const Dashboard = () => {
   }
 
   //* Getting the data from the database
-  const getData = async () => { };
+  const getData = async () => {
+    let u = await fetchuser(session.user.name);
+    setform(u);
+  };
 
   const handleChange = (e) => {
     setform({ ...form, [e.target.name]: e.target.value });

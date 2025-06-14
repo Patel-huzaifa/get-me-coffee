@@ -78,7 +78,7 @@ const PaymentPage = ({ username }) => {
       <div className="cover w-full  relative">
         <img
           className="object-cover w-full h-[320px]"
-          src="https://c10.patreonusercontent.com/4/patreon-media/p/campaign/3436817/c4ef714edd8f48b28fe42a0f51d7d9d8/eyJ3Ijo5NjAsIndlIjoxfQ%3D%3D/2.JPG?token-hash=eG6WmXiXs4gPlGdKLHh4GJmns1xyzP7hNjSd3czVSSs%3D&token-time=1751587200"
+          src={CurrentUser.coverpic}
           alt="coverpic"
         />
         <div className="absolute bottom-[-13%] right-[47.5%] border-2 border-gray-300 rounded-full overflow-hidden">
@@ -86,7 +86,7 @@ const PaymentPage = ({ username }) => {
             width={80}
             height={80}
             className=""
-            src="https://c10.patreonusercontent.com/4/patreon-media/p/campaign/7791476/ed5957534b284ffb81eeb8df65fdc95a/eyJoIjozNjAsInciOjM2MH0%3D/2.png?token-hash=32h8uJr2sfU5gRLrfjb2AX48I2oz0PNUnSB5p_1siK4%3D&token-time=1750982400"
+            src={CurrentUser.profilepic}
             alt="profilepic"
           />
         </div>
